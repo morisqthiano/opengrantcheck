@@ -2,6 +2,7 @@
 .DS_Store
 Thumbs.db
 *.log
+logs/
 
 # Local environment files
 .env
@@ -11,9 +12,11 @@ backend/.env
 frontend/.env
 
 # Dependencies and build output
+node_modules/
 backend/vendor/
 frontend/node_modules/
 frontend/dist/
+dist/
 
 # Laravel generated files
 backend/public/storage
@@ -22,13 +25,23 @@ backend/storage/app/public/guidelines/*
 backend/storage/app/public/proposals/*
 !backend/storage/app/public/guidelines/.gitkeep
 !backend/storage/app/public/proposals/.gitkeep
+backend/storage/framework/testing/disks/
+backend/storage/framework/views/*.php
 
 # Local SQLite runtime database
 backend/database/database.sqlite
 
-# Tool/editor metadata
-.idea/
-.vscode/
+# Test, cache, and tool output
+coverage/
+.nyc_output/
 .phpunit.cache/
 backend/.phpunit.cache/
 backend/.phpunit.result.cache
+.vite/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Tool/editor metadata
+.idea/
+.vscode/
+.vscode-test/

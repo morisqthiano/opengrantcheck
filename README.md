@@ -2,9 +2,13 @@
 
 OpenGrantCheck is a local-first open-source AI assistant for research proposal compliance checking.
 
+The project helps lecturers, researchers, small universities, and LPPM/research administration teams review proposal drafts against grant guidelines through a privacy-aware, self-hosted workflow. Many proposals fail because required sections, outputs, budget explanations, references, or administrative details are incomplete, not because the research idea is weak.
+
 ## Project Goal
 
-OpenGrantCheck helps lecturers, researchers, small universities, and LPPM teams review research proposal drafts against grant guidelines through a privacy-aware, self-hosted workflow. Prototype V0.1 focuses on the foundation: document uploads, proposal tracking, and dummy compliance checklist results without real AI, RAG, API keys, or external services.
+OpenGrantCheck will provide a self-hosted web application where users can upload a grant guideline and a proposal draft, then receive a structured compliance checklist, missing-section detection, and practical revision suggestions.
+
+Prototype V0.1 focuses on the foundation: document uploads, proposal tracking, and dummy compliance checklist results without real AI, RAG, API keys, or external services.
 
 ## Repository Structure
 
@@ -33,6 +37,16 @@ opengrantcheck/
 - Run dummy compliance checks for proposals.
 - View checklist status, score, and recommendations.
 - No login, no AI integration, no API keys, and no external API calls.
+
+## Future Features
+
+- Document parsing for proposal structure and sections.
+- RAG-based guideline reader.
+- Compliance checklist generator backed by real guideline retrieval.
+- Missing-section detection.
+- Revision recommendation module.
+- Demo dataset and proposal templates.
+- Docker-based self-hosted installation.
 
 ## Technology Stack
 
@@ -88,10 +102,6 @@ The frontend runs by default at:
 http://localhost:5173
 ```
 
-## Project Status
-
-Prototype V0.1. Compliance output is dummy data and exists only to validate the product workflow before adding real AI/RAG capabilities.
-
 ## Development Checks
 
 Run backend tests:
@@ -109,17 +119,19 @@ npm run lint
 npm run build
 ```
 
-## GitHub Push
+## Roadmap
 
-```bash
-git init
-git add .
-git commit -m "Initial OpenGrantCheck prototype"
-git branch -M main
-git remote add origin https://github.com/morisqthiano/opengrantcheck.git
-git push -u origin main
-```
+- M1: System architecture and database design
+- M2: Guideline and document upload module
+- M3: Document parser and RAG engine
+- M4: Compliance checklist and recommendation module
+- M5: Dashboard, testing, and security improvement
+- M6: Documentation, Docker setup, and open-source release
+
+## Project Status
+
+Prototype V0.1. Compliance output is dummy data and exists only to validate the product workflow before adding real AI/RAG capabilities.
 
 ## License
 
-Released under the AGPL-3.0 License.
+Released under the GNU Affero General Public License v3.0 (AGPL-3.0).
