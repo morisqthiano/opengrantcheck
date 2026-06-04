@@ -1,0 +1,6 @@
+*
+!.gitignore
+!guidelines/
+!guidelines/.gitkeep
+!proposals/
+!proposals/.gitkeep
