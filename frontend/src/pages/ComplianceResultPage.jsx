@@ -5,6 +5,7 @@ import BadgeStatus from '../components/BadgeStatus'
 import Button from '../components/Button'
 import ComplianceChecklist from '../components/ComplianceChecklist'
 import api from '../services/api'
+import { apiErrorMessage } from '../services/errorMessage'
 
 export default function ComplianceResultPage() {
   const { proposalId } = useParams()
@@ -16,7 +17,7 @@ export default function ComplianceResultPage() {
     api
       .get(`/checks/result/${proposalId}`)
       .then((response) => setResult(response.data.data))
-      .catch((err) => setError(err.response?.data?.message || 'Unable to load compliance result.'))
+      .catch((err) => setError(apiErrorMessage(err, 'Unable to load compliance result.')))
       .finally(() => setLoading(false))
   }, [proposalId])
 

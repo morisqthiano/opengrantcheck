@@ -41,7 +41,8 @@ class OpenGrantCheckApiTest extends TestCase
         $response
             ->assertCreated()
             ->assertJsonPath('success', true)
-            ->assertJsonPath('data.title', 'Internal Research Grant Guideline');
+            ->assertJsonPath('data.title', 'Internal Research Grant Guideline')
+            ->assertJsonPath('data.metadata_json.extraction_status', 'not_supported_yet');
 
         $this->assertDatabaseHas('guidelines', [
             'title' => 'Internal Research Grant Guideline',
@@ -75,6 +76,25 @@ class OpenGrantCheckApiTest extends TestCase
         Storage::disk('public')->assertExists($response->json('data.file_path'));
     }
 
+    public function test_txt_upload_extracts_text(): void
+    {
+        Storage::fake('public');
+
+        $response = $this->postJson('/api/proposals', [
+            'title' => 'Text Proposal',
+            'researcher_name' => 'Dr. Text',
+            'file' => UploadedFile::fake()->createWithContent(
+                'proposal.txt',
+                "Abstract\n\nMethodology and privacy consideration are included.",
+            ),
+        ]);
+
+        $response
+            ->assertCreated()
+            ->assertJsonPath('data.metadata_json.extraction_status', 'extracted')
+            ->assertJsonPath('data.extracted_text', 'Abstract Methodology and privacy consideration are included.');
+    }
+
     public function test_dummy_compliance_check_can_be_run_and_retrieved(): void
     {
         $proposal = Proposal::create([
@@ -82,6 +102,8 @@ class OpenGrantCheckApiTest extends TestCase
             'researcher_name' => 'Dr. Local First',
             'file_path' => 'proposals/example.txt',
             'original_filename' => 'example.txt',
+            'extracted_text' => null,
+            'metadata_json' => null,
         ]);
 
         $runResponse = $this->postJson("/api/checks/run/{$proposal->id}");
@@ -102,5 +124,30 @@ class OpenGrantCheckApiTest extends TestCase
             ->assertJsonPath('data.proposal.title', 'Privacy-Aware Research Tooling')
             ->assertJsonPath('data.check.score', 72)
             ->assertJsonPath('data.checklist.6.status', 'Missing');
+    }
+
+    public function test_guideline_and_proposal_detail_routes_work(): void
+    {
+        Storage::fake('public');
+
+        $guideline = $this->postJson('/api/guidelines', [
+            'title' => 'Detail Guideline',
+            'description' => 'Detail test',
+            'file' => UploadedFile::fake()->createWithContent('guideline.txt', 'Guideline text'),
+        ])->json('data');
+
+        $proposal = $this->postJson('/api/proposals', [
+            'title' => 'Detail Proposal',
+            'researcher_name' => 'Dr. Detail',
+            'file' => UploadedFile::fake()->createWithContent('proposal.txt', 'Proposal text'),
+        ])->json('data');
+
+        $this->getJson("/api/guidelines/{$guideline['id']}")
+            ->assertOk()
+            ->assertJsonPath('data.title', 'Detail Guideline');
+
+        $this->getJson("/api/proposals/{$proposal['id']}")
+            ->assertOk()
+            ->assertJsonPath('data.title', 'Detail Proposal');
     }
 }

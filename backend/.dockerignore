@@ -1,0 +1,10 @@
+vendor
+.env
+database/database.sqlite
+storage/app/public/guidelines/*
+storage/app/public/proposals/*
+!storage/app/public/guidelines/.gitkeep
+!storage/app/public/proposals/.gitkeep
+storage/framework/testing
+storage/framework/views/*.php
+storage/logs/*.log

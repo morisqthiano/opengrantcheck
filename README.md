@@ -119,6 +119,23 @@ npm run lint
 npm run build
 ```
 
+## Docker Setup
+
+```bash
+docker compose up --build
+```
+
+Default URLs:
+
+```text
+Backend: http://localhost:8000
+Frontend: http://localhost:5173
+```
+
+## API Documentation
+
+See [docs/api.md](docs/api.md).
+
 ## Roadmap
 
 - M1: System architecture and database design

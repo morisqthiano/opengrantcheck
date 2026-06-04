@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import AlertMessage from '../components/AlertMessage'
 import Button from '../components/Button'
 import api from '../services/api'
+import { apiErrorMessage } from '../services/errorMessage'
 
 export default function ChecksPage() {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ export default function ChecksPage() {
     api
       .get('/proposals')
       .then((response) => setProposals(response.data.data))
-      .catch(() => setError('Unable to load proposals. Make sure the Laravel API is running.'))
+      .catch((err) => setError(apiErrorMessage(err, 'Unable to load proposals. Make sure the Laravel API is running.')))
       .finally(() => setLoading(false))
   }, [])
 
@@ -27,7 +28,7 @@ export default function ChecksPage() {
       await api.post(`/checks/run/${proposalId}`)
       navigate(`/checks/result/${proposalId}`)
     } catch (err) {
-      setError(err.response?.data?.message || 'Unable to run compliance check.')
+      setError(apiErrorMessage(err, 'Unable to run compliance check.'))
     } finally {
       setRunningId(null)
     }

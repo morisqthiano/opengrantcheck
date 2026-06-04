@@ -2,6 +2,7 @@ import { useState } from 'react'
 import AlertMessage from '../components/AlertMessage'
 import Button from '../components/Button'
 import api from '../services/api'
+import { apiErrorMessage } from '../services/errorMessage'
 
 export default function UploadGuidelinePage() {
   const [form, setForm] = useState({ title: '', description: '', file: null })
@@ -28,7 +29,7 @@ export default function UploadGuidelinePage() {
       setForm({ title: '', description: '', file: null })
       event.target.reset()
     } catch (err) {
-      setError(err.response?.data?.message || 'Unable to upload guideline.')
+      setError(apiErrorMessage(err, 'Unable to upload guideline.'))
     } finally {
       setSubmitting(false)
     }
@@ -38,7 +39,7 @@ export default function UploadGuidelinePage() {
     <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
       <p className="text-sm font-semibold uppercase tracking-wide text-sky-700">Guidelines</p>
       <h1 className="mt-2 text-3xl font-bold text-slate-950">Upload Grant Guideline</h1>
-      <p className="mt-3 text-slate-600">Accepted files: PDF, DOC, DOCX, and TXT up to 10MB.</p>
+      <p className="mt-3 text-slate-600">Accepted files: PDF, DOC, DOCX, and TXT up to 10MB. TXT files are parsed into extracted text in this prototype.</p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-md border border-slate-200 bg-white p-6 shadow-sm">
         <AlertMessage type="success" message={message} />

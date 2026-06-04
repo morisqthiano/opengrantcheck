@@ -15,11 +15,20 @@ class Guideline extends Model
         'description',
         'file_path',
         'original_filename',
+        'extracted_text',
+        'metadata_json',
     ];
 
     protected $appends = [
         'file_url',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'metadata_json' => 'array',
+        ];
+    }
 
     public function getFileUrlAttribute(): string
     {

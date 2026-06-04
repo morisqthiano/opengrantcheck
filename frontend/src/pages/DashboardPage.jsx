@@ -34,6 +34,8 @@ export default function DashboardPage() {
         <div className="flex flex-wrap gap-3">
           <Button to="/guidelines/create">Upload Guideline</Button>
           <Button to="/proposals/create" variant="secondary">Upload Proposal</Button>
+          <Button to="/guidelines" variant="muted">View Guidelines</Button>
+          <Button to="/proposals" variant="muted">View Proposals</Button>
           <Button to="/checks" variant="muted">View Checks</Button>
         </div>
       </div>
